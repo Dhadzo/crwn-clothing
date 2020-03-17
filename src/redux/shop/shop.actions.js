@@ -11,19 +11,7 @@ export const fetchColletionsSuccess = collectionsMap => ({
     payload: collectionsMap
 });
 
-export const fetchCollectionMessage = errorMessage => ({
+export const fetchCollectionsFailure = errorMessage => ({
     type: ShopActionTypes.FETCH_COLLECTIONS_FAILURE,
     payload: errorMessage
 })
-
-export const fetchCollectionsStartAsync = () => {
-    return dispatch => {
-        const collectionRef = firestore.collection('collections');
-        dispatch(fetchCollectionsStart());
-        collectionRef.get().then(snapshot => {
-          const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-          dispatch(fetchColletionsSuccess(collectionsMap));
-          this.setState({isLoading: false});
-      }).catch(error => dispatch(fetchCollectionMessage(error.message)));
-    }
-}
